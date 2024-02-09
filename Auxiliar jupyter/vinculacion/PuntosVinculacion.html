@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<head>    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_1adb05fede8e4cacb45407ddb5b06e36 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+            </style>
+        
+</head>
+<body>    
+    
+            <div class="folium-map" id="map_1adb05fede8e4cacb45407ddb5b06e36" ></div>
+        
+</body>
+<script>    
+    
+            var map_1adb05fede8e4cacb45407ddb5b06e36 = L.map(
+                "map_1adb05fede8e4cacb45407ddb5b06e36",
+                {
+                    center: [-34.6506, -58.7897],
+                    crs: L.CRS.EPSG3857,
+                    zoom: 12,
+                    zoomControl: true,
+                    preferCanvas: false,
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_9f906ef9e2b64b4fa19f535257a254e4 = L.tileLayer(
+                "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {"attribution": "Data by \u0026copy; \u003ca href=\"http://openstreetmap.org\"\u003eOpenStreetMap\u003c/a\u003e, under \u003ca href=\"http://www.openstreetmap.org/copyright\"\u003eODbL\u003c/a\u003e.", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            ).addTo(map_1adb05fede8e4cacb45407ddb5b06e36);
+        
+    
+            var circle_d3a41c5dc12a456197eaec8c25235509 = L.circle(
+                [-34.65052914312466, -58.77667018465804],
+                {"bubblingMouseEvents": true, "color": "#AE4CCF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AE4CCF", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 250, "stroke": true, "weight": 3}
+            ).addTo(map_1adb05fede8e4cacb45407ddb5b06e36);
+        
+    
+        var popup_6f834e5f0fcb497990c42e15495142eb = L.popup({"maxWidth": 300});
+
+        
+            var html_057e073166524bb8a2df699f0e30086d = $(`<div id="html_057e073166524bb8a2df699f0e30086d" style="width: 100.0%; height: 100.0%;"><h3> <a href="http://www.unm.edu.ar/"> Universidad Nacional de Moreno </a> </h3><br/>                      <br/>                     <img src="https://www.w3schools.com/html/pic_trulli.jpg" alt="Trulli" style="max-width:100%;max-height:100%"></div>`)[0];
+            popup_6f834e5f0fcb497990c42e15495142eb.setContent(html_057e073166524bb8a2df699f0e30086d);
+        
+
+        circle_d3a41c5dc12a456197eaec8c25235509.bindPopup(popup_6f834e5f0fcb497990c42e15495142eb)
+        ;
+
+        
+    
+    
+            var marker_5a8a5b8008df4bbe9344d9cf63609095 = L.marker(
+                [-34.65122568627023, -58.785265671675795],
+                {}
+            ).addTo(map_1adb05fede8e4cacb45407ddb5b06e36);
+        
+    
+        var popup_e169bc0f967d4d5fa473233450cf48f7 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_441510f680cd4ca297aaed45989b48df = $(`<div id="html_441510f680cd4ca297aaed45989b48df" style="width: 100.0%; height: 100.0%;">               <h2> <b> Internet de las cosas (IoT) aplicado al distanciamiento social. </b> </h2>                      <br> <b> Resumen del proyecto: </b> Desarrollo de un sistema de información que mediante dispositivos de IoT integrados a la gestión de datos permite el monitoreo y alertas, de distanciamiento social en las organizaciones.  </br>                      <br> <b>Director: </b> Gabriel Venturino </br>                     <br> <b> Contraparte: </b> <a href="https://efalcom.com/home/"> eFALCOM S.A </a> <br/>                     <br> <b>Financiamiento:</b> Programa Soluciona. Reactivación de la Economía del Conocimiento. Ministerio de Desarrollo productivo. </br>                     <br> <b>Unidad: </b> DCAyT </br>                     <br> <b>Comienzo de actividades: </b> 30/7/2021 </br>                     <br> <b>Fecha de finalización: </b> 31/3/2022 </br>                     <br> <b>Fondos acreditados: </b> 4.990.154,60 </br>                     </div>`)[0];
+            popup_e169bc0f967d4d5fa473233450cf48f7.setContent(html_441510f680cd4ca297aaed45989b48df);
+        
+
+        marker_5a8a5b8008df4bbe9344d9cf63609095.bindPopup(popup_e169bc0f967d4d5fa473233450cf48f7)
+        ;
+
+        
+    
+    
+            var marker_a5924ce940c8498284d77e841d2598c5 = L.marker(
+                [-34.63322998447044, -58.75765492751253],
+                {}
+            ).addTo(map_1adb05fede8e4cacb45407ddb5b06e36);
+        
+    
+        var popup_3629b594aab641ccbc01411d271f5191 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_c04bf462b6db42ecb161bd21639aaf9a = $(`<div id="html_c04bf462b6db42ecb161bd21639aaf9a" style="width: 100.0%; height: 100.0%;">               <h2> <b> Internet de las cosas (IoT) aplicado al distanciamiento social. </b> </h2>                      <br> <b> Resumen del proyecto: </b> Desarrollo de un sistema de información que mediante dispositivos de IoT integrados a la gestión de datos permite el monitoreo y alertas, de distanciamiento social en las organizaciones.  </br>                      <br> <b>Director: </b> Gabriel Venturino </br>                     <br> <b> Contraparte: </b> <a href="http://www.argenpur.com.ar/"> Argenpur S.A </a> <br/>                     <br> <b>Financiamiento:</b> Programa Soluciona. Reactivación de la Economía del Conocimiento. Ministerio de Desarrollo productivo. </br>                     <br> <b>Unidad: </b> DCAyT </br>                     <br> <b>Comienzo de actividades: </b> 30/7/2021 </br>                     <br> <b>Fecha de finalización: </b> 31/3/2022 </br>                     <br> <b>Fondos acreditados: </b> 4.990.154,60 </br>                     </div>`)[0];
+            popup_3629b594aab641ccbc01411d271f5191.setContent(html_c04bf462b6db42ecb161bd21639aaf9a);
+        
+
+        marker_a5924ce940c8498284d77e841d2598c5.bindPopup(popup_3629b594aab641ccbc01411d271f5191)
+        ;
+
+        
+    
+    
+            var marker_932997abfc5d4dcaaeac9ea0906c0bad = L.marker(
+                [-34.65673560168275, -58.76826048516911],
+                {}
+            ).addTo(map_1adb05fede8e4cacb45407ddb5b06e36);
+        
+    
+        var popup_b523ffc155f240c3bf5d7bef875167c9 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_d0448cdae7c64e50b665985cf9e4257e = $(`<div id="html_d0448cdae7c64e50b665985cf9e4257e" style="width: 100.0%; height: 100.0%;">               <h2> <b> Internet de las cosas (IoT) aplicado al distanciamiento social. </b> </h2>                      <br> <b> Resumen del proyecto: </b> Desarrollo de un sistema de información que mediante dispositivos de IoT integrados a la gestión de datos permite el monitoreo y alertas, de distanciamiento social en las organizaciones.  </br>                      <br> <b>Director: </b> Gabriel Venturino </br>                     <br> <b> Contraparte: </b> <a href="https://scaltersrl.com.ar/">Scalter S.R.L </a> <br/>                     <br> <b>Financiamiento:</b> Programa Soluciona. Reactivación de la Economía del Conocimiento. Ministerio de Desarrollo productivo. </br>                     <br> <b>Unidad: </b> DCAyT </br>                     <br> <b>Comienzo de actividades: </b> 30/7/2021 </br>                     <br> <b>Fecha de finalización: </b> 31/3/2022 </br>                     <br> <b>Fondos acreditados: </b> 4.990.154,60 </br>                     </div>`)[0];
+            popup_b523ffc155f240c3bf5d7bef875167c9.setContent(html_d0448cdae7c64e50b665985cf9e4257e);
+        
+
+        marker_932997abfc5d4dcaaeac9ea0906c0bad.bindPopup(popup_b523ffc155f240c3bf5d7bef875167c9)
+        ;
+
+        
+    
+    
+            var marker_949d238abda9416899c0a2b97bb3c12a = L.marker(
+                [-34.54570035075286, -58.513172085374926],
+                {}
+            ).addTo(map_1adb05fede8e4cacb45407ddb5b06e36);
+        
+    
+        var popup_c430e83a72134927bf5482502c6b68ee = L.popup({"maxWidth": "100%"});
+
+        
+            var html_0e19f1bdbbe64acdb3491b36a286fe1e = $(`<div id="html_0e19f1bdbbe64acdb3491b36a286fe1e" style="width: 100.0%; height: 100.0%;">               <h2> <b> Proyecto de servicio de informe ambiental para nuevas tecnologías </b> </h2>                      <br> <b> Resumen del proyecto: </b> -</br>                      <br> <b>Director: </b> Marina Abruzzini </br>                     <br> <b> Contraparte: </b> <a href="https://lihue.com.ar/"> Lihué Ingeniería S.A </a> <br/>                     <br> <b>Financiamiento:</b> Lihué Ingeniería S.A. </br>                     <br> <b>Unidad: </b> DCAyT </br>                     <br> <b>Comienzo de actividades: </b> - </br>                     <br> <b>Fecha de finalización: </b> - </br>                     <br> <b>Fondos acreditados: </b> 40.000,00 </br>                     </div>`)[0];
+            popup_c430e83a72134927bf5482502c6b68ee.setContent(html_0e19f1bdbbe64acdb3491b36a286fe1e);
+        
+
+        marker_949d238abda9416899c0a2b97bb3c12a.bindPopup(popup_c430e83a72134927bf5482502c6b68ee)
+        ;
+
+        
+    
+    
+            var marker_a91ef5e3e55945179ab4bddc424da6d9 = L.marker(
+                [-34.59754461260412, -58.37062716613194],
+                {}
+            ).addTo(map_1adb05fede8e4cacb45407ddb5b06e36);
+        
+    
+        var popup_e343f0af80594aa4a89b8bcad585866b = L.popup({"maxWidth": "100%"});
+
+        
+            var html_f046fb7b3a3142aa8548bd506a06c48f = $(`<div id="html_f046fb7b3a3142aa8548bd506a06c48f" style="width: 100.0%; height: 100.0%;">               <h2> <b> Dictamen técnico de Impacto en la economía real. </b> </h2>                      <br> <b> Resumen del proyecto:</b> Cuenta con compromiso de confidencialidad </br>                      <br> <b>Director: </b> Walter Klein </br>                     <br> <b> Contraparte: </b> <a href="https://lihue.com.ar/"> Generación Mediterranea S.A </a> <br/>                     <br> <b>Financiamiento:</b> Generación Mediterranea S.A. </br>                     <br> <b>Unidad: </b> - </br>                     <br> <b>Comienzo de actividades: </b> 16/5/2021 </br>                     <br> <b>Fecha de finalización: </b> 16/7/2021 </br>                     <br> <b>Fondos acreditados: </b> 2.500.000,00 </br>                     </div>`)[0];
+            popup_e343f0af80594aa4a89b8bcad585866b.setContent(html_f046fb7b3a3142aa8548bd506a06c48f);
+        
+
+        marker_a91ef5e3e55945179ab4bddc424da6d9.bindPopup(popup_e343f0af80594aa4a89b8bcad585866b)
+        ;
+
+        
+    
+    
+            var marker_b53a0aa1873f4aea894213cea6c4c2fb = L.marker(
+                [-34.76790068944727, -58.83849554839575],
+                {}
+            ).addTo(map_1adb05fede8e4cacb45407ddb5b06e36);
+        
+    
+            var icon_bb8082a764524a51aff3d2fa82b5b04a = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "green", "prefix": "glyphicon"}
+            );
+            marker_b53a0aa1873f4aea894213cea6c4c2fb.setIcon(icon_bb8082a764524a51aff3d2fa82b5b04a);
+        
+    
+        var popup_39b691091da8420eb4aa7aa403945a16 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_d75355955e8548349f210837afda975a = $(`<div id="html_d75355955e8548349f210837afda975a" style="width: 100.0%; height: 100.0%;">Coop. de trabajo MasterCheese Ltda</div>`)[0];
+            popup_39b691091da8420eb4aa7aa403945a16.setContent(html_d75355955e8548349f210837afda975a);
+        
+
+        marker_b53a0aa1873f4aea894213cea6c4c2fb.bindPopup(popup_39b691091da8420eb4aa7aa403945a16)
+        ;
+
+        
+    
+    
+            var marker_65856ed0b9bc4a849a1054d48b5284af = L.marker(
+                [-34.74064737333929, -58.32448233876158],
+                {}
+            ).addTo(map_1adb05fede8e4cacb45407ddb5b06e36);
+        
+    
+        var popup_d361f9059a86482d9bc75c3bb124d8c5 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_1c1f113adaf24da7850828cfe090bc61 = $(`<div id="html_1c1f113adaf24da7850828cfe090bc61" style="width: 100.0%; height: 100.0%;">               <h2> <b> Estudio y asistencia técnica para el reemplazo del latón de forja por el aluminio  </b> </h2>                      <br> <b> Resumen del proyecto: </b> Consiste en la prueba y ensayos de diferentes aleaciones de aluminio en la búsqueda de optimizar el proceso de fundido, inyección  y mecanizado para la elaboración de válvulas de gas usadas para cocinas, termotanques y estufas, en reemplazo del  latón forjado. Esto permitirá abastecer el mercado interno y de la región.</br>                      <br> <b>Director: </b> Gabriel Venturino </br>                     <br> <b> Contraparte: </b> <a href="https://www.facebook.com/CooperativaEitec/"> Coop. de trabajo EITEC Ltda </a> <br/>                     <br> <b>Financiamiento:</b> Convocatoria 2021 para Emprendedores/as de Base Científica y/o tecnológica en Desarrollos con Impacto Social - Provincia de Buenos Aires. Convocatoria NETS. MINCyT </br>                     <br> <b>Unidad: </b> DCAyT </br>                     <br> <b>Comienzo de actividades: </b> - </br>                     <br> <b>Fecha de finalización: </b> - </br>                     <br> <b>Fondos acreditados: </b> 1.500.000,00 </br>                     </div>`)[0];
+            popup_d361f9059a86482d9bc75c3bb124d8c5.setContent(html_1c1f113adaf24da7850828cfe090bc61);
+        
+
+        marker_65856ed0b9bc4a849a1054d48b5284af.bindPopup(popup_d361f9059a86482d9bc75c3bb124d8c5)
+        ;
+
+        
+    
+    
+            var marker_dbb0a24626c0460d8dbd7c95898aa701 = L.marker(
+                [-34.691662819291466, -58.532946731986144],
+                {}
+            ).addTo(map_1adb05fede8e4cacb45407ddb5b06e36);
+        
+    
+        var popup_c8cfeeb5bc594dc0add3f24b59ed0d7e = L.popup({"maxWidth": "100%"});
+
+        
+            var html_39c2270303fc427099fbfeebf7123b87 = $(`<div id="html_39c2270303fc427099fbfeebf7123b87" style="width: 100.0%; height: 100.0%;">               <h2> <b> Co-diseño de componente electrónico para el control de la producción o PLC. </b> </h2>                      <br> <b> Resumen del proyecto: </b> Co-diseño de componente electrónico para el control de la producción o PLC, destinado a una máquina semi automática confeccionadora de bolsas de polietileno.</br>                      <br> <b>Director: </b> Gabriel Venturino </br>                     <br> <b> Contraparte: </b> <a href="https://www.facebook.com/CooperativaEitec/"> Coop. de Trabajo Reciclando Sueños Ltda </a> <br/>                     <br> <b>Financiamiento:</b> Convocatoria Transformación Digital Bonaerense. Ministerio de Producción, Ciencia e Innovación Tecnológica. PBA </br>                     <br> <b>Unidad: </b> DCAyT </br>                     <br> <b>Comienzo de actividades: </b> - </br>                     <br> <b>Fecha de finalización: </b> - </br>                     <br> <b>Fondos acreditados: </b> 1.500.000,00 </br>                     </div>`)[0];
+            popup_c8cfeeb5bc594dc0add3f24b59ed0d7e.setContent(html_39c2270303fc427099fbfeebf7123b87);
+        
+
+        marker_dbb0a24626c0460d8dbd7c95898aa701.bindPopup(popup_c8cfeeb5bc594dc0add3f24b59ed0d7e)
+        ;
+
+        
+    
+    
+            var marker_90f3fbce0ce046b59310b42373520dc2 = L.marker(
+                [-34.67752211513004, -58.54196662283064],
+                {}
+            ).addTo(map_1adb05fede8e4cacb45407ddb5b06e36);
+        
+    
+        var popup_824cd180cc1f4913836bfe1fa4e4143f = L.popup({"maxWidth": "100%"});
+
+        
+            var html_041be9b45e8343d89ac9dd901d0676dd = $(`<div id="html_041be9b45e8343d89ac9dd901d0676dd" style="width: 100.0%; height: 100.0%;">               <h2> <b> La cooperativa de Trabajo Dignidad Laboral Ltda como "refuncionalizador" de Residuos de Aparatos Eléctricos y Electrónicos. </b> </h2>                      <br> <b> Resumen del proyecto: </b> - </br>                      <br> <b>Director: </b> Stella Maris Bonaventura </br>                     <br> <b> Contraparte: </b> <a href="https://www.facebook.com/CooperativaEitec/"> Coop. de trabajo Dignidad Laboral Ltda </a> <br/>                     <br> <b>Financiamiento:</b> Convocatoriade Proyectos de Tecnologías para la inclusión social (PTIS) - año 2021, del MINCYT a través del Programa Nacional de Tecnología e Innovación Social, bajo la órbita de la SSPCTI, dependiente del SPPCTEI </br>                     <br> <b>Unidad: </b> DCAyT </br>                     <br> <b>Comienzo de actividades: </b> - </br>                     <br> <b>Fecha de finalización: </b> - </br>                     <br> <b>Fondos acreditados: </b> 1.500.000,00 </br>                     </div>`)[0];
+            popup_824cd180cc1f4913836bfe1fa4e4143f.setContent(html_041be9b45e8343d89ac9dd901d0676dd);
+        
+
+        marker_90f3fbce0ce046b59310b42373520dc2.bindPopup(popup_824cd180cc1f4913836bfe1fa4e4143f)
+        ;
+
+        
+    
+    
+            var marker_82434f2d02b4476781ac5254774cedb7 = L.marker(
+                [-34.565277715981885, -59.1113902670744],
+                {}
+            ).addTo(map_1adb05fede8e4cacb45407ddb5b06e36);
+        
+    
+            var icon_6d4a481b1a25474187868b9ab6eb85d3 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "green", "prefix": "glyphicon"}
+            );
+            marker_82434f2d02b4476781ac5254774cedb7.setIcon(icon_6d4a481b1a25474187868b9ab6eb85d3);
+        
+    
+        var popup_aff706ad116341c1bb41144dd4f931e8 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_6556b7ef731c416cab340c63024de0df = $(`<div id="html_6556b7ef731c416cab340c63024de0df" style="width: 100.0%; height: 100.0%;">Municipio de Luján</div>`)[0];
+            popup_aff706ad116341c1bb41144dd4f931e8.setContent(html_6556b7ef731c416cab340c63024de0df);
+        
+
+        marker_82434f2d02b4476781ac5254774cedb7.bindPopup(popup_aff706ad116341c1bb41144dd4f931e8)
+        ;
+
+        
+    
+    
+            var marker_9a12ffc307eb40079c91bc3497dc5569 = L.marker(
+                [-34.650156368335736, -58.620362659934955],
+                {}
+            ).addTo(map_1adb05fede8e4cacb45407ddb5b06e36);
+        
+    
+        var popup_53e23f0adc6b4f948d9eea3ea67247ab = L.popup({"maxWidth": "100%"});
+
+        
+            var html_3c077e7cc31f4c19afa6029888e48a07 = $(`<div id="html_3c077e7cc31f4c19afa6029888e48a07" style="width: 100.0%; height: 100.0%;">SuperCanal S.A</div>`)[0];
+            popup_53e23f0adc6b4f948d9eea3ea67247ab.setContent(html_3c077e7cc31f4c19afa6029888e48a07);
+        
+
+        marker_9a12ffc307eb40079c91bc3497dc5569.bindPopup(popup_53e23f0adc6b4f948d9eea3ea67247ab)
+        ;
+
+        
+    
+    
+            var marker_6b6082a05b6f4eb882a82e1b985874aa = L.marker(
+                [-27.68217443044872, -60.91192007208838],
+                {}
+            ).addTo(map_1adb05fede8e4cacb45407ddb5b06e36);
+        
+    
+        var popup_ce367e7bc8684a85b95f1b95b9edb587 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_17c6b7a44a4f4f708ae14f7aaef507a3 = $(`<div id="html_17c6b7a44a4f4f708ae14f7aaef507a3" style="width: 100.0%; height: 100.0%;">               <h2> <b> Desarrollo de un kit para la automatización de las trampas del Picudo algodonero y tendido de redes Lorawan aplicado a su monitoreo y control en cultivos de algodón en la zona de Sáenz Peña, Chaco </b> </h2>                      <br> <b> Resumen del proyecto: </b> - </br>                      <br> <b>Director: </b> Gabriel Venturino </br>                     <br> <b> Contraparte: </b> <a href="https://www.facebook.com/CooperativaEitec/"> Asociación Argentina de Productores Algodoneros </a> <br/>                     <br> <b>Financiamiento:</b> Asociación Argentina de Productores Algodoneros </br>                     <br> <b>Unidad: </b> DCAyT </br>                     <br> <b>Comienzo de actividades: </b> 26/10/2021 </br>                     <br> <b>Fecha de finalización: </b> 25/10/2022 </br>                     <br> <b>Fondos acreditados: </b> 1.500.000,00 </br>                     </div>`)[0];
+            popup_ce367e7bc8684a85b95f1b95b9edb587.setContent(html_17c6b7a44a4f4f708ae14f7aaef507a3);
+        
+
+        marker_6b6082a05b6f4eb882a82e1b985874aa.bindPopup(popup_ce367e7bc8684a85b95f1b95b9edb587)
+        ;
+
+        
+    
+    
+            var tile_layer_9094eecb75b54e0582ee6820a6feaaea = L.tileLayer(
+                "https://stamen-tiles-{s}.a.ssl.fastly.net/toner/{z}/{x}/{y}.png",
+                {"attribution": "Map tiles by \u003ca href=\"http://stamen.com\"\u003eStamen Design\u003c/a\u003e, under \u003ca href=\"http://creativecommons.org/licenses/by/3.0\"\u003eCC BY 3.0\u003c/a\u003e. Data by \u0026copy; \u003ca href=\"http://openstreetmap.org\"\u003eOpenStreetMap\u003c/a\u003e, under \u003ca href=\"http://www.openstreetmap.org/copyright\"\u003eODbL\u003c/a\u003e.", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            ).addTo(map_1adb05fede8e4cacb45407ddb5b06e36);
+        
+    
+            var tile_layer_8b87a0e18e164010a47698121d063831 = L.tileLayer(
+                "https://stamen-tiles-{s}.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.jpg",
+                {"attribution": "Map tiles by \u003ca href=\"http://stamen.com\"\u003eStamen Design\u003c/a\u003e, under \u003ca href=\"http://creativecommons.org/licenses/by/3.0\"\u003eCC BY 3.0\u003c/a\u003e. Data by \u0026copy; \u003ca href=\"http://openstreetmap.org\"\u003eOpenStreetMap\u003c/a\u003e, under \u003ca href=\"http://creativecommons.org/licenses/by-sa/3.0\"\u003eCC BY SA\u003c/a\u003e.", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            ).addTo(map_1adb05fede8e4cacb45407ddb5b06e36);
+        
+    
+            var tile_layer_a9c8b79af09b48e1903ea58ced69964e = L.tileLayer(
+                "https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png",
+                {"attribution": "\u0026copy; \u003ca href=\"http://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"http://cartodb.com/attributions\"\u003eCartoDB\u003c/a\u003e, CartoDB \u003ca href =\"http://cartodb.com/attributions\"\u003eattributions\u003c/a\u003e", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            ).addTo(map_1adb05fede8e4cacb45407ddb5b06e36);
+        
+    
+            var tile_layer_6bb593ff221e4410aa28695a63287bdd = L.tileLayer(
+                "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {"attribution": "Data by \u0026copy; \u003ca href=\"http://openstreetmap.org\"\u003eOpenStreetMap\u003c/a\u003e, under \u003ca href=\"http://www.openstreetmap.org/copyright\"\u003eODbL\u003c/a\u003e.", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            ).addTo(map_1adb05fede8e4cacb45407ddb5b06e36);
+        
+    
+            var layer_control_048af7a0a8f547648c1161c1a88d8232 = {
+                base_layers : {
+                    "openstreetmap" : tile_layer_6bb593ff221e4410aa28695a63287bdd,
+                    "stamentoner" : tile_layer_9094eecb75b54e0582ee6820a6feaaea,
+                    "stamenwatercolor" : tile_layer_8b87a0e18e164010a47698121d063831,
+                    "cartodbpositron" : tile_layer_a9c8b79af09b48e1903ea58ced69964e,
+                },
+                overlays :  {
+                },
+            };
+            L.control.layers(
+                layer_control_048af7a0a8f547648c1161c1a88d8232.base_layers,
+                layer_control_048af7a0a8f547648c1161c1a88d8232.overlays,
+                {"autoZIndex": true, "collapsed": true, "position": "topright"}
+            ).addTo(map_1adb05fede8e4cacb45407ddb5b06e36);
+            tile_layer_9094eecb75b54e0582ee6820a6feaaea.remove();
+            tile_layer_8b87a0e18e164010a47698121d063831.remove();
+            tile_layer_a9c8b79af09b48e1903ea58ced69964e.remove();
+            tile_layer_6bb593ff221e4410aa28695a63287bdd.remove();
+        
+</script>

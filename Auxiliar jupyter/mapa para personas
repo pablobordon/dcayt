@@ -1,0 +1,76 @@
+
+
+
+# Crear columnas para el layout
+col1, col2= st.columns([5, 5])
+
+with col1:
+    st.markdown("<h3 style='text-align: left; color: grey;'>¿De donde vienen los Investigadores? </h3>", unsafe_allow_html=True)
+
+
+
+
+import pydeck as pdk
+
+# Asumiendo que df_filtrado es tu DataFrame ya preparado
+# y contiene las columnas 'LATITUDE', 'LONGITUDE', 'Nombre', y 'Apellido'
+df_mapa = df_filtrado.dropna(subset=['LATITUDE', 'LONGITUDE'])
+
+# Asegurándonos de incluir el nombre y apellido en los datos para PyDeck
+data_for_pydeck = df_mapa[['LATITUDE', 'LONGITUDE', 'Nombre', 'Apellido']].to_dict(orient='records')
+
+# Configuración de la vista inicial del mapa
+initial_view_state = pdk.ViewState(
+    latitude=-34.65047618759525,
+    longitude=-58.77682038835569,
+    zoom=10,
+    pitch=0,
+)
+
+# Creación de la capa para el mapa con PyDeck
+map_layer = pdk.Layer(
+    'ScatterplotLayer',
+    data=data_for_pydeck,
+    get_position='[LONGITUDE, LATITUDE]',
+    get_color=[255, 0, 0, 160],  # Color rojo para los puntos
+    get_radius=150,  # Tamaño de los puntos
+    pickable=True,  # Habilitar la interacción y mostrar tooltips
+)
+
+# Definición de los tooltips para mostrar el nombre y apellido
+tooltips = {
+    "html": "<b>Nombre:</b> {Nombre}<br><b>Apellido:</b> {Apellido}",
+    "style": {
+        "backgroundColor": "steelblue",
+        "color": "white"
+    }
+}
+
+# Crear columnas para el layout
+col1, col2= st.columns([5,5 ])
+
+# Mostrar el mapa en la columna central
+with col1:  # Cambia a col1 si deseas que el mapa esté en la columna izquierda
+    st.pydeck_chart(pdk.Deck(
+        map_style='mapbox://styles/mapbox/light-v10',  # Estilo de mapa "light"
+        initial_view_state=initial_view_state,
+        layers=[map_layer],
+        tooltip=tooltips,  # Configuración de tooltips
+    ), use_container_width=True)
+
+# Nota: Ajusta las proporciones de las columnas según necesites
+    
+
+st.markdown("<h3 style='text-align: left; color: grey;'>Listados según filtro</h3>", unsafe_allow_html=True)
+
+#KPI'S
+
+    # Contar el número de personas únicas (basado en DNI)
+numero_personas = df_filtrado['DNI'].nunique()
+    # Mostrar en la main page
+st.metric(label="Personas seleccionadas según filtro", value=numero_personas)
+    # Muestra el DataFrame filtrado en la página principal
+if st.checkbox('Listado de persona-proyecto'):
+    st.table(df_filtrado[["apellido","Nombre_y"]])
+        #st.table(df_filtrado)
+
