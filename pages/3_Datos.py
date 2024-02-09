@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 import tempfile
-
+import os
 
 #configurar página
 st.set_page_config(page_title="Datos", page_icon="#️⃣", layout="wide")
@@ -11,31 +11,8 @@ st.set_page_config(page_title="Datos", page_icon="#️⃣", layout="wide")
 
 ################ --- DATOS ---
 
-df_proyectos = pd.read_excel(
-    io="/home/pablo/Proyectos/DCAyT/Streamlit/datos/Proyectos2.xlsx",
-    engine="openpyxl",
-    skiprows=0,
-    usecols="A:Q",
-    nrows=51,
-    )
 
-df_participa = pd.read_excel(
-    io="/home/pablo/Proyectos/DCAyT/Streamlit/datos/Participa.xlsx",
-    engine="openpyxl",
-    skiprows=0,
-    usecols="A:E",
-    nrows=279,
-    )
-
-df_personas = pd.read_excel(
-    io="/home/pablo/Proyectos/DCAyT/Streamlit/datos/Personas.xlsx",
-    engine="openpyxl",
-    skiprows=0,
-    usecols="A:J",
-    nrows=431,
-    )
-
-
+# Definición de la función para cargar datos
 @st.cache_data
 def cargar_datos_excel(ruta_archivo, usecols, nrows):
     return pd.read_excel(
@@ -46,10 +23,22 @@ def cargar_datos_excel(ruta_archivo, usecols, nrows):
         nrows=nrows,
     )
 
-df_proyectos = cargar_datos_excel("/home/pablo/Proyectos/DCAyT/Streamlit/datos/Proyectos2.xlsx", "A:Q", 51)
-df_participa = cargar_datos_excel("/home/pablo/Proyectos/DCAyT/Streamlit/datos/Participa.xlsx", "A:E", 279)
-df_personas = cargar_datos_excel("/home/pablo/Proyectos/DCAyT/Streamlit/datos/Personas.xlsx", "A:J", 431)
+# Función ajustada para obtener la ruta relativa de los archivos
+def obtener_ruta_relativa(nombre_archivo):
+    directorio_base = os.getcwd()  # Obtiene el directorio de trabajo actual
+    ruta_completa = os.path.join(directorio_base, "datos", nombre_archivo)
+    if not os.path.isfile(ruta_completa):  # Verifica si la ruta no existe
+        # Alternativa: busca la ruta relativa desde la raíz del proyecto
+        ruta_completa = os.path.join(directorio_base, "pages", "datos", nombre_archivo)
+        if not os.path.isfile(ruta_completa):  # Si aún no encuentra el archivo, intenta otra estructura de directorio
+            directorio_base = os.path.dirname(os.path.abspath(__file__))
+            ruta_completa = os.path.join(directorio_base, "datos", nombre_archivo)
+    return ruta_completa
 
+# Uso de la función para cargar los archivos con rutas relativas
+df_proyectos = cargar_datos_excel(obtener_ruta_relativa("Proyectos2.xlsx"), "A:Q", 51)
+df_participa = cargar_datos_excel(obtener_ruta_relativa("Participa.xlsx"), "A:E", 279)
+df_personas = cargar_datos_excel(obtener_ruta_relativa("Personas.xlsx"), "A:J", 431)
 
 ################# --- SIDEBAR ---
 
