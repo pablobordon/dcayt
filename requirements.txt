@@ -6,3 +6,5 @@ openpyxl>=3.0.7
 numpy>=1.19.5
 pyvis>=0.1.9
 folium>=0.12.1
+streamlit_folium>=0.1.0
+
