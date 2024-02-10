@@ -14,7 +14,6 @@ st.markdown("<h2 style='text-align: center; color: grey;'>DCAyT - Investigadores
 st.markdown("""---""")
 
 
-st.markdown("<h5 style='text-align: center; color: grey;'>EN CONSTRUCCION.</h5>", unsafe_allow_html=True)
 
 
 
