@@ -12,11 +12,12 @@ st.markdown("<h2 style='text-align: center; color: grey;'>DCAyT - Investigadores
 
 
 st.markdown("""---""")
-
-st.markdown("<h5 style='text-align: center; color: grey;'>Versión preliminar.</h5>", unsafe_allow_html=True)
-st.markdown("<h5 style='text-align: center; color: grey;'>Puede haber errores en los datos, o mismo datos faltantes. Solo trabajado período 2022-2024.</h5>", unsafe_allow_html=True)
-
-
 st.markdown("<h5 style='text-align: center; color: grey;'>Navegar panel lateral</h5>", unsafe_allow_html=True)
+
+st.markdown("<h5 style='text-align: center; color: grey;'>En Redes se ilustra la interconexión entre investigadores y proyectos del departamentor.</h5>", unsafe_allow_html=True)
+st.markdown("<h5 style='text-align: center; color: grey;'>En Datos se da cuenta del estado de situación de proyectos e investigadores.</h5>", unsafe_allow_html=True)
+st.markdown("<h5 style='text-align: center; color: grey;'>En Mapas visualizar información relacionada tanto con proyectos como con investigadores.</h5>", unsafe_allow_html=True)
+
+
 
 

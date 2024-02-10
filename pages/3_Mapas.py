@@ -60,7 +60,10 @@ st.sidebar.markdown("""
 
 
 # por Radicación
-radicacion_filtro = st.sidebar.multiselect('Radicación del proyecto', options=df_fusion['Radicación'].unique(),default=df_fusion['Radicación'].unique())
+# Asegúrate de que "Programa de Estudios del Ambiente" esté entre las opciones disponibles, si no, ajusta el texto a un valor válido.
+valor_default_radicacion = ["Programa de Estudios del Ambiente"] if "Programa de Estudios del Ambiente" in df_fusion['Radicación'].unique() else []
+
+radicacion_filtro = st.sidebar.multiselect('Radicación del proyecto', options=df_fusion['Radicación'].unique(), default=valor_default_radicacion)
 
 #Por Estado
 estado_unicos =df_fusion['Estado'].unique()
@@ -70,24 +73,6 @@ estado_filtro=st.sidebar.multiselect('Estado del proyecto',estado_unicos,default
 tipos_unicos =df_fusion['Tipo'].unique() # Extrae los valores únicos de la columna 'Tipo' para usarlos en el multiselector
 tipos_seleccionados = st.sidebar.multiselect('Tipo de proyecto', tipos_unicos,default=df_fusion['Tipo'].unique()) # Sidebar con multiselector
 
-#Filtrado por Característica
-caracteristica_unicos =df_fusion['Característica'].unique()
-caracteristica_seleccionado=st.sidebar.multiselect('Característica del proyecto',caracteristica_unicos,default=df_fusion['Característica'].unique())
-
-#Filtrado por Fecha Inicio-Finalización
-
-# Asegurarse de que las columnas de fecha son de tipo datetime
-df_fusion['Inicio'] = pd.to_datetime(df_fusion['Inicio'])
-df_fusion['Finalización'] = pd.to_datetime(df_fusion['Finalización'])
-# Convertir las fechas mínima y máxima a datetime.date (si es necesario)
-fecha_min = df_fusion['Inicio'].min().date()
-fecha_max = df_fusion['Finalización'].max().date()
-# Sidebar para rango de fechas
-fecha_inicio, fecha_fin = st.sidebar.slider(
-    "Fechas Inicio - Finalización del proyecto",
-    value=(fecha_min, fecha_max),
-    format="MM/DD/YYYY"
-)
 
 #### Investigador
 
@@ -103,32 +88,11 @@ apellido_filtro = st.sidebar.text_input("Apellido del investigador:", value="")
 apellido_filtro = apellido_filtro.lower()
 
 
-#Por tipo docente
-tipo_docente_filtro = st.sidebar.multiselect('Condición del Investigador', options=df_fusion['Condición'].unique(),default=df_fusion['Condición'].unique())
-
-#Por area
-area_filtro=st.sidebar.multiselect('Carrera en la cual el investigador participa',options=df_fusion['Area'].unique(),default=df_fusion['Area'].unique())
-
-#Por Sexo
-sexo_filtro = st.sidebar.multiselect('Sexo del investigador', options=df_fusion['Sexo'].unique(),default=df_fusion['Sexo'].unique())
-
-# Por Título de Grado
-titulo_grado_filtro = st.sidebar.multiselect('Título de Grado del investigador', options=df_fusion['Título de Grado'].unique(), default=df_fusion['Título de Grado'].unique())
-
-
-
 # Aplicar los filtros seleccionados
 df_filtrado = df_fusion[df_fusion['Radicación'].isin(radicacion_filtro) & 
-                        df_fusion['Sexo'].isin(sexo_filtro) & 
-                        df_fusion['Condición'].isin(tipo_docente_filtro) &
                         df_fusion['Estado'].isin(estado_filtro) &
-                        df_fusion['Area'].isin(area_filtro) &
-                        (df_fusion['Inicio'].dt.date >= fecha_inicio) &
-                        (df_fusion['Finalización'].dt.date <= fecha_fin) &
-                        df_fusion['Característica'].isin(caracteristica_seleccionado) & 
                         df_fusion['Tipo'].isin(tipos_seleccionados) &
-                        df_fusion['apellido'].str.lower().str.contains(apellido_filtro) &
-                        df_fusion['Título de Grado'].isin(titulo_grado_filtro)
+                        df_fusion['apellido'].str.lower().str.contains(apellido_filtro) 
                         ]
 
 
@@ -239,19 +203,3 @@ st_folium(m, height=600, width=1025)
 
 
 
-
-st.markdown("""
-<h6 style='text-align: left; color: grey; margin-bottom: 0px;'>
-La paleta de colores se asigna de la siguiente manera:
-</h6>
-<ul style='font-size: 13px; color: grey; margin-top: 0px;'>
-    <li><strong>Proyecto de Extensión</strong>: 🟥 (Color rojo)</li>
-    <li><strong>Proyecto de Vinculación</strong>: 🟢 (Color verde claro)</li>
-    <li><strong>Proyecto de Investigación</strong>: 🔵 (Color azul claro)</li>
-    <li><strong>Investigador</strong>: 🟣 (Color rosa claro)</li>
-</ul>
-""", unsafe_allow_html=True)
-
-
-
-st.markdown("""---""")

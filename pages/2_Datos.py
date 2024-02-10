@@ -3,7 +3,7 @@ import pandas as pd
 import plotly.express as px
 import tempfile
 import os
-
+import plotly.figure_factory as ff
 #configurar página
 st.set_page_config(page_title="Datos", page_icon="#️⃣", layout="wide")
 
@@ -62,8 +62,10 @@ st.sidebar.markdown("""
 
 
 # por Radicación
-radicacion_filtro = st.sidebar.multiselect('Radicación del proyecto', options=df_fusion['Radicación'].unique(),default=df_fusion['Radicación'].unique())
+# Asegúrate de que "Programa de Estudios del Ambiente" esté entre las opciones disponibles, si no, ajusta el texto a un valor válido.
+valor_default_radicacion = ["Programa de Estudios del Ambiente"] if "Programa de Estudios del Ambiente" in df_fusion['Radicación'].unique() else []
 
+radicacion_filtro = st.sidebar.multiselect('Radicación del proyecto', options=df_fusion['Radicación'].unique(), default=valor_default_radicacion)
 #Por Estado
 estado_unicos =df_fusion['Estado'].unique()
 estado_filtro=st.sidebar.multiselect('Estado del proyecto',estado_unicos,default=df_fusion['Estado'].unique())
@@ -175,7 +177,7 @@ with col1:
     """,
         unsafe_allow_html=True,
     )
-    st.metric(label="Proyectos", value=total_proyectos)
+    st.metric(label="Proyectos según filtro", value=total_proyectos)
 
 with col2:
     # Calcular y mostrar el número total de personas únicas involucradas en los proyectos filtrados
@@ -190,7 +192,7 @@ with col2:
     """,
         unsafe_allow_html=True,
     )
-    st.metric(label="Investigadores", value=total_personas)
+    st.metric(label="Investigadores según filtro", value=total_personas)
 
 
 # Checkbox para mostrar/ocultar el listado de personas y proyectos
@@ -208,6 +210,51 @@ if st.checkbox('Listado de investigadores en proyectos'):
 
 st.markdown("""---""")
 
+
+#############3 Gradico de ganth
+
+
+st.markdown("<h4 style='text-align: center; color: grey;'>Seguimiento de proyectos en el tiempo</h4>", unsafe_allow_html=True)
+
+
+
+
+
+# Función para recortar el nombre del proyecto
+def recortar_nombre(nombre, limite_palabras=3):
+    palabras = nombre.split()
+    nombre_recortado = ' '.join(palabras[:limite_palabras])
+    return nombre_recortado + "..." if len(palabras) > limite_palabras else nombre_recortado
+
+# Aplica la función para recortar los nombres de los proyectos
+df_filtrado['Nombre_recortado'] = df_filtrado['Nombre_y'].apply(recortar_nombre)
+
+# Preparar el DataFrame para Plotly create_gantt
+df_gantt = df_filtrado[['Nombre_recortado', 'Inicio', 'Finalización', 'Radicación']].rename(columns={
+    'Nombre_recortado': 'Task',
+    'Inicio': 'Start',
+    'Finalización': 'Finish',
+    'Radicación': 'Resource'
+})
+
+# Usar una paleta secuencial para asignar colores
+paleta_secuencial = px.colors.sequential.Sunsetdark
+
+# Crea un mapeo único de 'Radicación' a un color de la paleta secuencial
+radicaciones_unicas = df_gantt['Resource'].unique()
+num_radicaciones = len(radicaciones_unicas)
+colores_asignados = {radicacion: paleta_secuencial[i * len(paleta_secuencial) // num_radicaciones] for i, radicacion in enumerate(radicaciones_unicas)}
+
+# Convierte el DataFrame ajustado a una lista de diccionarios
+tasks = df_gantt.to_dict('records')
+
+# Crear el gráfico de Gantt
+fig = ff.create_gantt(tasks, index_col='Resource', title='Proyecto', group_tasks=True, show_colorbar=True, colors=colores_asignados)
+
+# Mostrar el gráfico en Streamlit, ajustando al ancho del contenedor
+st.plotly_chart(fig, use_container_width=True)
+
+st.markdown("""---""")
 
 
 
@@ -273,46 +320,4 @@ st.markdown("""---""")
 
 
 
-
-st.markdown("<h4 style='text-align: center; color: grey;'>Seguimiento de proyectos en el tiempo</h4>", unsafe_allow_html=True)
-
-
-import plotly.figure_factory as ff
-
-
-# Función para recortar el nombre del proyecto
-def recortar_nombre(nombre, limite_palabras=3):
-    palabras = nombre.split()
-    nombre_recortado = ' '.join(palabras[:limite_palabras])
-    return nombre_recortado + "..." if len(palabras) > limite_palabras else nombre_recortado
-
-# Aplica la función para recortar los nombres de los proyectos
-df_filtrado['Nombre_recortado'] = df_filtrado['Nombre_y'].apply(recortar_nombre)
-
-# Preparar el DataFrame para Plotly create_gantt
-df_gantt = df_filtrado[['Nombre_recortado', 'Inicio', 'Finalización', 'Radicación']].rename(columns={
-    'Nombre_recortado': 'Task',
-    'Inicio': 'Start',
-    'Finalización': 'Finish',
-    'Radicación': 'Resource'
-})
-
-# Usar una paleta secuencial para asignar colores
-paleta_secuencial = px.colors.sequential.Sunsetdark
-
-# Crea un mapeo único de 'Radicación' a un color de la paleta secuencial
-radicaciones_unicas = df_gantt['Resource'].unique()
-num_radicaciones = len(radicaciones_unicas)
-colores_asignados = {radicacion: paleta_secuencial[i * len(paleta_secuencial) // num_radicaciones] for i, radicacion in enumerate(radicaciones_unicas)}
-
-# Convierte el DataFrame ajustado a una lista de diccionarios
-tasks = df_gantt.to_dict('records')
-
-# Crear el gráfico de Gantt
-fig = ff.create_gantt(tasks, index_col='Resource', title='Proyecto', group_tasks=True, show_colorbar=True, colors=colores_asignados)
-
-# Mostrar el gráfico en Streamlit, ajustando al ancho del contenedor
-st.plotly_chart(fig, use_container_width=True)
-
-st.markdown("""---""")
 

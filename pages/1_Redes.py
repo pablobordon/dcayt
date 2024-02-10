@@ -7,7 +7,14 @@ import os
 #configurar página
 st.set_page_config(page_title="Redes", page_icon="👤", layout="wide")
 
-
+# Insertar CSS personalizado
+st.markdown("""
+    <style>
+    .stApp {
+        background-color: #FFFFFF;
+    }
+    </style>
+    """, unsafe_allow_html=True)
 
 ################ --- DATOS ---
 
@@ -64,34 +71,30 @@ st.sidebar.markdown("""
 
 
 # por Radicación
-radicacion_filtro = st.sidebar.multiselect('Radicación del proyecto', options=df_fusion['Radicación'].unique(),default=df_fusion['Radicación'].unique())
+# Asegúrate de que "Programa de Estudios del Ambiente" esté entre las opciones disponibles, si no, ajusta el texto a un valor válido.
+valor_default_radicacion = ["Programa de Estudios del Ambiente"] if "Programa de Estudios del Ambiente" in df_fusion['Radicación'].unique() else []
+
+radicacion_filtro = st.sidebar.multiselect('Radicación del proyecto', options=df_fusion['Radicación'].unique(), default=valor_default_radicacion)
+
 
 #Por Estado
 estado_unicos =df_fusion['Estado'].unique()
-estado_filtro=st.sidebar.multiselect('Estado del proyecto',estado_unicos,default=df_fusion['Estado'].unique())
+
+
+# Asegúrate de que "En ejecución" esté entre las opciones disponibles, si no, ajusta el texto a un valor válido.
+valor_default_estado = ["En ejecución"] if "En ejecución" in df_fusion['Estado'].unique() else []
+
+estado_filtro = st.sidebar.multiselect('Estado del proyecto', estado_unicos, default=valor_default_estado)
+
 
 #Filtrado por 'Tipo'
 tipos_unicos =df_fusion['Tipo'].unique() # Extrae los valores únicos de la columna 'Tipo' para usarlos en el multiselector
-tipos_seleccionados = st.sidebar.multiselect('Tipo de proyecto', tipos_unicos,default=df_fusion['Tipo'].unique()) # Sidebar con multiselector
+# Asegúrate de que "Investigación" esté entre las opciones disponibles, si no, ajusta el texto a un valor válido.
+valor_default_tipo = ["Investigación"] if "Investigación" in df_fusion['Tipo'].unique() else []
 
-#Filtrado por Característica
-caracteristica_unicos =df_fusion['Característica'].unique()
-caracteristica_seleccionado=st.sidebar.multiselect('Característica del proyecto',caracteristica_unicos,default=df_fusion['Característica'].unique())
+tipos_seleccionados = st.sidebar.multiselect('Tipo de proyecto', tipos_unicos, default=valor_default_tipo)
 
-#Filtrado por Fecha Inicio-Finalización
 
-# Asegurarse de que las columnas de fecha son de tipo datetime
-df_fusion['Inicio'] = pd.to_datetime(df_fusion['Inicio'])
-df_fusion['Finalización'] = pd.to_datetime(df_fusion['Finalización'])
-# Convertir las fechas mínima y máxima a datetime.date (si es necesario)
-fecha_min = df_fusion['Inicio'].min().date()
-fecha_max = df_fusion['Finalización'].max().date()
-# Sidebar para rango de fechas
-fecha_inicio, fecha_fin = st.sidebar.slider(
-    "Fechas Inicio - Finalización del proyecto",
-    value=(fecha_min, fecha_max),
-    format="MM/DD/YYYY"
-)
 
 #### Investigador
 
@@ -108,38 +111,26 @@ apellido_filtro = apellido_filtro.lower()
 
 
 #Por tipo docente
-tipo_docente_filtro = st.sidebar.multiselect('Condición del Investigador', options=df_fusion['Condición'].unique(),default=df_fusion['Condición'].unique())
+# Asegúrate de que las condiciones deseadas estén entre las opciones disponibles, si no, ajusta los textos a valores válidos.
+valores_default_condicion = ["Docente", "Auxiliar graduado", "Auxiliar estudiante"]
+valores_default_condicion = [valor for valor in valores_default_condicion if valor in df_fusion['Condición'].unique()]
 
-#Por area
-area_filtro=st.sidebar.multiselect('Carrera en la cual el investigador participa',options=df_fusion['Area'].unique(),default=df_fusion['Area'].unique())
-
-#Por Sexo
-sexo_filtro = st.sidebar.multiselect('Sexo del investigador', options=df_fusion['Sexo'].unique(),default=df_fusion['Sexo'].unique())
-
-# Por Título de Grado
-titulo_grado_filtro = st.sidebar.multiselect('Título de Grado del investigador', options=df_fusion['Título de Grado'].unique(), default=df_fusion['Título de Grado'].unique())
-
+tipo_docente_filtro = st.sidebar.multiselect('Condición del Investigador', options=df_fusion['Condición'].unique(), default=valores_default_condicion)
 
 
 # Aplicar los filtros seleccionados
 df_filtrado = df_fusion[df_fusion['Radicación'].isin(radicacion_filtro) & 
-                        df_fusion['Sexo'].isin(sexo_filtro) & 
                         df_fusion['Condición'].isin(tipo_docente_filtro) &
                         df_fusion['Estado'].isin(estado_filtro) &
-                        df_fusion['Area'].isin(area_filtro) &
-                        (df_fusion['Inicio'].dt.date >= fecha_inicio) &
-                        (df_fusion['Finalización'].dt.date <= fecha_fin) &
-                        df_fusion['Característica'].isin(caracteristica_seleccionado) & 
                         df_fusion['Tipo'].isin(tipos_seleccionados) &
-                        df_fusion['apellido'].str.lower().str.contains(apellido_filtro) &
-                        df_fusion['Título de Grado'].isin(titulo_grado_filtro)
+                        df_fusion['apellido'].str.lower().str.contains(apellido_filtro) 
                         ]
 
 
 
 ## cerciorarse de que se está seleccionando algo
 if df_filtrado.empty:
-    st.warning("No hay datos disponibles basados en los filtros realizados. Recuerde no dejar opción sin seleccionar al filtrar.")
+    st.warning("No hay datos disponibles basados en los filtros realizados.")
     st.stop() # This will halt the app from further execution.
 
 
@@ -177,6 +168,23 @@ Este diagrama ilustra la interconexión entre investigadores y proyectos del dep
 
 """, unsafe_allow_html=True)
 
+
+st.markdown("""
+
+
+<ul style='font-size: 13px; color: grey; margin-top: 0px;'>
+    <strong>Proyecto</strong>: 🟥 (Color rojo)
+    <strong>Director</strong>: 🟡 (Color dorado)
+    <strong>Codirector</strong>: 🟢 (Color verde claro)
+    <strong>Investigador</strong>: 🔵 (Color azul claro)
+    <strong>Estudiante</strong>: 🟣 (Color rosa claro)
+""", unsafe_allow_html=True)
+
+
+
+
+
+
 # Definición de funciones
 def abreviar_nombre_proyecto(nombre, max_chars=25):
     if len(nombre) > max_chars:
@@ -195,8 +203,8 @@ def formatear_apellido(apellido):
 # Mapeo de roles a colores específicos
 rol_a_color = {
     'Director': 'gold',
-    'Codirector': 'lightgreen',
-    'Investigador': 'lightblue',
+    'Codirector': 'mediumaquamarine',
+    'Investigador': 'lightsteelblue',
     'Estudiante': 'lightpink',
 }
 
@@ -238,7 +246,7 @@ for index, row in df_filtrado.iterrows():
     net.add_node(apellido, title=f"Rol: {rol}", label=apellido, color=color_nodo, size=15)
     
     # Agregar nodo del proyecto diferenciado con el nombre en negrita y abreviado
-    net.add_node(nombre_proyecto, title=f"{row['Nombre_y']}", label=nombre_proyecto, color="#f44336", size=10)
+    net.add_node(nombre_proyecto, title=f"{row['Nombre_y']}", label=nombre_proyecto, color="#CD5C5C", size=10)
     
     # Conectar persona con proyecto
     net.add_edge(apellido, nombre_proyecto)
@@ -252,22 +260,6 @@ HtmlFile = open(tmpfile.name, 'r', encoding='utf-8')
 source_code = HtmlFile.read() 
 st.components.v1.html(source_code, height=800, scrolling=True)
 
-
-
-
-st.markdown("""
-
-<h6 style='text-align: left; color: grey; margin-bottom: 0px;'>
-La paleta de colores se asigna de la siguiente manera:
-</h6>
-<ul style='font-size: 13px; color: grey; margin-top: 0px;'>
-    <li><strong>Proyecto</strong>: 🟥 (Color rojo)</li>
-    <li><strong>Director</strong>: 🟡 (Color dorado)</li>
-    <li><strong>Codirector</strong>: 🟢 (Color verde claro)</li>
-    <li><strong>Investigador</strong>: 🔵 (Color azul claro)</li>
-    <li><strong>Estudiante</strong>: 🟣 (Color rosa claro)</li>
-</ul>
-""", unsafe_allow_html=True)
 
 
 
