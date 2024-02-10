@@ -61,7 +61,7 @@ st.sidebar.markdown("""
 
 # por Radicación
 # Asegúrate de que "Programa de Estudios del Ambiente" esté entre las opciones disponibles, si no, ajusta el texto a un valor válido.
-valor_default_radicacion = ["Programa de Estudios del Ambiente"] if "Programa de Estudios del Ambiente" in df_fusion['Radicación'].unique() else []
+valor_default_radicacion = ["Centro de Investigación e Innovación Tecnológica"] if "Centro de Investigación e Innovación Tecnológica" in df_fusion['Radicación'].unique() else []
 
 radicacion_filtro = st.sidebar.multiselect('Radicación del proyecto', options=df_fusion['Radicación'].unique(), default=valor_default_radicacion)
 
@@ -112,7 +112,7 @@ import folium
 from streamlit_folium import st_folium
 
 
-st.markdown("<h3 style='text-align: center; color: grey;'>Zona de influencia de proyectos y localización de investigadores</h3>", unsafe_allow_html=True)
+st.markdown("<h3 style='text-align: center; color: grey;'>Zona de influencia de proyectos</h3>", unsafe_allow_html=True)
 
 st.markdown("""---""")
 
@@ -137,8 +137,7 @@ st.markdown("""
 <span style='font-size: 13px;'> 
 <strong>Proyecto de Extensión</strong>: 🟥 (Color rojo) / 
 <strong>Proyecto de Vinculación</strong>: 🟢 (Color verde claro) / 
-<strong>Proyecto de Investigación</strong>: 🔵 (Color azul claro) /
-<strong>Investigador</strong>: 🟣 (Color rosa claro)
+<strong>Proyecto de Investigación</strong>: 🔵 (Color azul claro) 
 </span>
 """, unsafe_allow_html=True)
 
@@ -158,20 +157,20 @@ tipo_a_color = {
 # Crear un mapa de Folium
 m = folium.Map(location=[-34.6037, -58.3816], zoom_start=10)  # Usar una ubicación y zoom iniciales adecuados
 
-# Añadir marcadores para los proyectos
-for _, row in df_mapa.iterrows():
-    color_marcador = tipo_a_color.get(row['Tipo'], 'gray')
-    popup_content = f"""
-    <b>Nombre del proyecto:</b> {row['Nombre_y']}<br>
-    <b>Contraparte:</b> {row['Contraparte']}<br>
-    <b>Sitio:</b> <a href="{row['Sitio']}" target="_blank">Visitar sitio</a><br>
-    <b>Tipo:</b> {row['Tipo']}
-    """
-    folium.Marker(
-        location=[row['LATITUDE2'], row['LONGITUDE2']],
-        popup=folium.Popup(popup_content, max_width=450),
-        icon=folium.Icon(color=color_marcador),
-    ).add_to(m)
+#### Añadir marcadores para los proyectos
+###for _, row in df_mapa.iterrows():
+###    color_marcador = tipo_a_color.get(row['Tipo'], 'gray')
+###    popup_content = f"""
+###    <b>Nombre del proyecto:</b> {row['Nombre_y']}<br>
+###    <b>Contraparte:</b> {row['Contraparte']}<br>
+###    <b>Sitio:</b> <a href="{row['Sitio']}" target="_blank">Visitar sitio</a><br>
+###    <b>Tipo:</b> {row['Tipo']}
+###    """
+###    folium.Marker(
+###        location=[row['LATITUDE2'], row['LONGITUDE2']],
+###        popup=folium.Popup(popup_content, max_width=450),
+###        icon=folium.Icon(color=color_marcador),
+###    ).add_to(m)
 
 
 
