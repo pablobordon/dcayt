@@ -159,11 +159,7 @@ st.write(" ")
 
 st.markdown("""
 <h5 style='text-align: left; color: grey;'>
-Este diagrama ilustra la interconexión entre investigadores y proyectos del departamento.<br>
-<ul>
-    <li>Interactúe con los nodos: seleccionándolos para descubrir más detalles y arrastrándolos para visualizar profundidad de la conexión.</li>
-    <li>Utilice el panel lateral para aplicar filtros específicos.</li>
-</ul>
+Interactúe con los nodos: seleccionándolos para descubrir más detalles y arrastrándolos para visualizar profundidad de la conexión
 </h5>
 
 """, unsafe_allow_html=True)
@@ -216,17 +212,17 @@ net = Network(height="750px", width="100%", bgcolor="#f0f0f0", font_color="black
 options = {
     "physics": {
         "enabled": True,
-        "stabilization": {"enabled": False},  # Deshabilitar la estabilización inicial puede ayudar
-        "solver": "barnesHut",  # Usar un solucionador menos intensivo
+        "stabilization": {"enabled": False},
+        "solver": "barnesHut",
         "barnesHut": {
             "gravitationalConstant": -5000,
             "centralGravity": 0.5,
             "springLength": 75,
-            "springConstant": 0.05,
-            "damping": 0.08,
+            "springConstant": 0.02,
+            "damping": 0.05,  # Reducido para disminuir la resistencia
             "avoidOverlap": 0
         },
-        "minVelocity": 0.2  # Ajustar para reducir el movimiento mínimo necesario
+        "minVelocity": 0.5  # Aumentado para mantener los nodos moviéndose por más tiempo
     }
 }
 

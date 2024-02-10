@@ -66,9 +66,6 @@ st.sidebar.markdown("""
 valor_default_radicacion = ["Programa de Estudios del Ambiente"] if "Programa de Estudios del Ambiente" in df_fusion['Radicación'].unique() else []
 
 radicacion_filtro = st.sidebar.multiselect('Radicación del proyecto', options=df_fusion['Radicación'].unique(), default=valor_default_radicacion)
-#Por Estado
-estado_unicos =df_fusion['Estado'].unique()
-estado_filtro=st.sidebar.multiselect('Estado del proyecto',estado_unicos,default=df_fusion['Estado'].unique())
 
 #Filtrado por 'Tipo'
 tipos_unicos =df_fusion['Tipo'].unique() # Extrae los valores únicos de la columna 'Tipo' para usarlos en el multiselector
@@ -78,20 +75,7 @@ tipos_seleccionados = st.sidebar.multiselect('Tipo de proyecto', tipos_unicos,de
 caracteristica_unicos =df_fusion['Característica'].unique()
 caracteristica_seleccionado=st.sidebar.multiselect('Característica del proyecto',caracteristica_unicos,default=df_fusion['Característica'].unique())
 
-#Filtrado por Fecha Inicio-Finalización
 
-# Asegurarse de que las columnas de fecha son de tipo datetime
-df_fusion['Inicio'] = pd.to_datetime(df_fusion['Inicio'])
-df_fusion['Finalización'] = pd.to_datetime(df_fusion['Finalización'])
-# Convertir las fechas mínima y máxima a datetime.date (si es necesario)
-fecha_min = df_fusion['Inicio'].min().date()
-fecha_max = df_fusion['Finalización'].max().date()
-# Sidebar para rango de fechas
-fecha_inicio, fecha_fin = st.sidebar.slider(
-    "Fechas Inicio - Finalización del proyecto",
-    value=(fecha_min, fecha_max),
-    format="MM/DD/YYYY"
-)
 
 #### Investigador
 
@@ -107,32 +91,13 @@ apellido_filtro = st.sidebar.text_input("Apellido del investigador:", value="")
 apellido_filtro = apellido_filtro.lower()
 
 
-#Por tipo docente
-tipo_docente_filtro = st.sidebar.multiselect('Condición del Investigador', options=df_fusion['Condición'].unique(),default=df_fusion['Condición'].unique())
-
-#Por area
-area_filtro=st.sidebar.multiselect('Carrera en la cual el investigador participa',options=df_fusion['Area'].unique(),default=df_fusion['Area'].unique())
-
-#Por Sexo
-sexo_filtro = st.sidebar.multiselect('Sexo del investigador', options=df_fusion['Sexo'].unique(),default=df_fusion['Sexo'].unique())
-
-# Por Título de Grado
-titulo_grado_filtro = st.sidebar.multiselect('Título de Grado del investigador', options=df_fusion['Título de Grado'].unique(), default=df_fusion['Título de Grado'].unique())
-
 
 
 # Aplicar los filtros seleccionados
 df_filtrado = df_fusion[df_fusion['Radicación'].isin(radicacion_filtro) & 
-                        df_fusion['Sexo'].isin(sexo_filtro) & 
-                        df_fusion['Condición'].isin(tipo_docente_filtro) &
-                        df_fusion['Estado'].isin(estado_filtro) &
-                        df_fusion['Area'].isin(area_filtro) &
-                        (df_fusion['Inicio'].dt.date >= fecha_inicio) &
-                        (df_fusion['Finalización'].dt.date <= fecha_fin) &
                         df_fusion['Característica'].isin(caracteristica_seleccionado) & 
                         df_fusion['Tipo'].isin(tipos_seleccionados) &
-                        df_fusion['apellido'].str.lower().str.contains(apellido_filtro) &
-                        df_fusion['Título de Grado'].isin(titulo_grado_filtro)
+                        df_fusion['apellido'].str.lower().str.contains(apellido_filtro) 
                         ]
 
 
@@ -195,18 +160,32 @@ with col2:
     st.metric(label="Investigadores según filtro", value=total_personas)
 
 
+# Antes de mostrar el dataframe
+st.markdown(
+    """
+    <style>
+    .dataframe-container {
+        width: 100% !important;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
 # Checkbox para mostrar/ocultar el listado de personas y proyectos
 if st.checkbox('Listado de investigadores en proyectos'):
-    # Renombrar las columnas para la visualización
-    df_mostrar = df_filtrado[['apellido', 'Nombre', 'Nombre_y']].rename(
+    # Renombrar las columnas y agregar "Tipo" y "Categoría" para la visualización
+    df_mostrar = df_filtrado[['apellido', 'Nombre', 'Nombre_y', 'Tipo', 'Característica']].rename(
         columns={
             'apellido': 'Apellido',
             'Nombre': 'Nombre',
-            'Nombre_y': 'Proyecto'
+            'Nombre_y': 'Proyecto',
+            'Tipo': 'Tipo',
+            'Característica': 'Categoría'
         }
     )
     # Mostrar la tabla con las columnas renombradas
-    st.dataframe(df_mostrar, height=600)  # Puedes ajustar la altura según necesites
+    st.dataframe(df_mostrar,width=1200)  # Removido height=600 para adaptarse al ancho del contenedor
 
 st.markdown("""---""")
 
@@ -260,7 +239,7 @@ st.markdown("""---""")
 
 
 
-###################################  PIE CHARTS 
+###################################  KPI's
 
 # Contabilizar Personas por la categoría seleccionada
 def contar_personas_por_categoria(df, categoria):
@@ -274,47 +253,67 @@ def contar_proyectos_por_categoria(df, categoria):
 
 
 
-st.markdown("<h4 style='text-align: center; color: grey;'>Proyectos en números</h4>", unsafe_allow_html=True)
+###################################  PIE CHARTS 
+
+
+
+st.markdown("<h4 style='text-align: center; color: grey;'>Proyectos por categoría</h4>", unsafe_allow_html=True)
+
+# Actualizar la lista de categorías para incluir "Característica" y excluir "Radicación" y "Estado"
+categorias = ['Tipo', 'Línea', 'Sublínea', 'Característica']
+indice_default_linea = categorias.index('Línea')  # Encuentra el índice de "Línea" en la lista actualizada
 
 # Usar st.columns para ajustar el ancho del selector de proyectos
 col_selector_der, _ = st.columns([3, 7])  # Ajusta según necesidad para el ancho del selector
 categoria_derecha = col_selector_der.selectbox(
     "Selecciona la categoría para visualizar en Proyectos:",
-    ['Radicación', 'Tipo', 'Línea', 'Sublínea', 'Estado'],
+    categorias,
+    index=indice_default_linea,  # Usa el índice de "Línea" como valor predeterminado
     key='selector_derecha'  # Clave única para este selector
 )
+
 df_proyectos_categoria = contar_proyectos_por_categoria(df_filtrado, categoria_derecha)
 fig_derecha = px.pie(df_proyectos_categoria, names=categoria_derecha, values='Num_Proyectos', title=f'Número de Proyectos por {categoria_derecha}',
                      color_discrete_sequence=px.colors.sequential.Sunsetdark)
 fig_derecha.update_traces(textinfo='value+percent')
 st.plotly_chart(fig_derecha)
 
-
-
-
-
 st.markdown("""---""")
 
 
+st.markdown("<h4 style='text-align: center; color: grey;'>Investigadores por categoría</h4>", unsafe_allow_html=True)
 
-
-
-st.markdown("<h4 style='text-align: center; color: grey;'>Investigadores en números</h4>", unsafe_allow_html=True)
+# Actualizar la lista de categorías y usar un diccionario para mapear los nombres mostrados en el selector
+categorias = ['Area', 'Condición', 'Sexo', 'Título de Grado', 'Título Posgrado']
+categorias_mostradas = {
+    'Area': 'Area',
+    'Condición': 'Condición',
+    'Sexo': 'Género',  # Cambiar la etiqueta de 'Sexo' a 'Género'
+    'Título de Grado': 'Título de Grado',
+    'Título Posgrado': 'Título Posgrado'
+}
 
 # Usar st.columns para ajustar el ancho del selector
 col_selector_izq, _ = st.columns([3, 7])  # Ajusta según necesidad para el ancho del selector
 categoria_izquierda = col_selector_izq.selectbox(
     "Selecciona la categoría para visualizar en Investigadores:",
-    ['Radicación', 'Area', 'Condición', 'Sexo', 'Título de Grado', 'Título Posgrado'],
+    options=list(categorias_mostradas.values()),  # Mostrar los nombres modificados en el selector
+    index=1,  # Establece 'Condición' (o el segundo elemento en la lista actualizada) como la opción predeterminada
     key='selector_izquierda'  # Clave única para este selector
 )
-df_personas_categoria = contar_personas_por_categoria(df_filtrado, categoria_izquierda)
-fig_izquierda = px.pie(df_personas_categoria, names=categoria_izquierda, values='Num_Personas', title=f'Número de Investigadores por {categoria_izquierda}',
-                       color_discrete_sequence=px.colors.sequential.Aggrnyl)
+
+# Convertir la selección de vuelta a la clave original si es necesario
+categoria_seleccionada = [clave for clave, valor in categorias_mostradas.items() if valor == categoria_izquierda][0]
+
+df_personas_categoria = contar_personas_por_categoria(df_filtrado, categoria_seleccionada)
+fig_izquierda = px.pie(df_personas_categoria, names=categoria_seleccionada, values='Num_Personas', title=f'Número de Investigadores por {categoria_izquierda}',
+                       color_discrete_sequence=px.colors.sequential.Sunsetdark)
 fig_izquierda.update_traces(textinfo='value+percent')
 st.plotly_chart(fig_izquierda)
 
 st.markdown("""---""")
+
+
 
 
 

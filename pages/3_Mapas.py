@@ -203,3 +203,4 @@ st_folium(m, height=600, width=1025)
 
 
 
+st.markdown("""---""")
