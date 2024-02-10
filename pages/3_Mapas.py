@@ -157,20 +157,20 @@ tipo_a_color = {
 # Crear un mapa de Folium
 m = folium.Map(location=[-34.6037, -58.3816], zoom_start=10)  # Usar una ubicación y zoom iniciales adecuados
 
-#### Añadir marcadores para los proyectos
-###for _, row in df_mapa.iterrows():
-###    color_marcador = tipo_a_color.get(row['Tipo'], 'gray')
-###    popup_content = f"""
-###    <b>Nombre del proyecto:</b> {row['Nombre_y']}<br>
-###    <b>Contraparte:</b> {row['Contraparte']}<br>
-###    <b>Sitio:</b> <a href="{row['Sitio']}" target="_blank">Visitar sitio</a><br>
-###    <b>Tipo:</b> {row['Tipo']}
-###    """
-###    folium.Marker(
-###        location=[row['LATITUDE2'], row['LONGITUDE2']],
-###        popup=folium.Popup(popup_content, max_width=450),
-###        icon=folium.Icon(color=color_marcador),
-###    ).add_to(m)
+#Añadir marcadores para los proyectos
+for _, row in df_mapa.iterrows():
+    color_marcador = tipo_a_color.get(row['Tipo'], 'gray')
+    popup_content = f"""
+    <b>Nombre del proyecto:</b> {row['Nombre_y']}<br>
+    <b>Contraparte:</b> {row['Contraparte']}<br>
+    <b>Sitio:</b> <a href="{row['Sitio']}" target="_blank">Visitar sitio</a><br>
+    <b>Tipo:</b> {row['Tipo']}
+    """
+    folium.Marker(
+        location=[row['LATITUDE2'], row['LONGITUDE2']],
+        popup=folium.Popup(popup_content, max_width=450),
+        icon=folium.Icon(color=color_marcador),
+    ).add_to(m)
 
 
 
@@ -180,21 +180,21 @@ m = folium.Map(location=[-34.6037, -58.3816], zoom_start=10)  # Usar una ubicaci
 
 # Añadir marcadores para las direcciones residenciales de los investigadores
 # Asegurarse de filtrar filas donde las latitudes y longitudes residenciales sean NaN
-df_residencias = df_filtrado.dropna(subset=['LATITUDE', 'LONGITUDE'])
-for _, row in df_residencias.iterrows():
-    # Modificar aquí para cambiar el contenido del popup
-    popup_content = f"""
-    <b>Investigador:</b><br>
-    <b>Proyecto:</b> {row['Nombre_y']}
-    """
-    folium.CircleMarker(
-        location=[row['LATITUDE'], row['LONGITUDE']],
-        radius=5,  # Tamaño del marcador
-        color='purple',  # Color diferenciado para residencias
-        fill=True,
-        fill_color='purple',
-        popup=folium.Popup(popup_content, max_width=300),
-    ).add_to(m)
+#df_residencias = df_filtrado.dropna(subset=['LATITUDE', 'LONGITUDE'])
+#for _, row in df_residencias.iterrows():
+#    # Modificar aquí para cambiar el contenido del popup
+#    popup_content = f"""
+#    <b>Investigador:</b><br>
+#    <b>Proyecto:</b> {row['Nombre_y']}
+#    """
+#    folium.CircleMarker(
+#        location=[row['LATITUDE'], row['LONGITUDE']],
+#        radius=5,  # Tamaño del marcador
+#        color='purple',  # Color diferenciado para residencias
+#        fill=True,
+#        fill_color='purple',
+#        popup=folium.Popup(popup_content, max_width=300),
+#    ).add_to(m)
 
 
 st_folium(m, height=600, width=1025)
