@@ -114,16 +114,9 @@ st.markdown("""---""")
 
 st.markdown("""
 <h5 style='text-align: left; color: grey;'>
-Diagramas y listas para analizar el estado el estado actual de proyectos e investigadores.<br>
-<ul>
-    <li>Modifique el selector para obtener más información.</li>
-    <li>Utilice el panel lateral para aplicar filtros específicos.</li>
-</ul>
+Diagramas y listas para analizar el estado el estado actual de proyectos e investigadores<br>
 </h5>
 """, unsafe_allow_html=True)
-
-
-st.markdown("""---""")
 
 
 # KPIs - Mostrar en dos columnas
