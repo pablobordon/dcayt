@@ -11,7 +11,7 @@ st.set_page_config(page_title="Redes", page_icon="👤", layout="wide")
 st.markdown("""
     <style>
     .stApp {
-        background-color: #FFFFFF;
+        background-color: #ffffff;
     }
     </style>
     """, unsafe_allow_html=True)
@@ -148,43 +148,53 @@ from pyvis.network import Network
 import tempfile
 import json
 
-st.markdown("<h3 style='text-align: center; color: grey;'>Redes de Investigadores en proyectos</h3>", unsafe_allow_html=True)
+st.markdown("<h3 style='text-align: center; color: #444;'>Redes de Investigadores en proyectos</h3>", unsafe_allow_html=True)
 
 st.markdown("""---""")
 
 
 
-# Agregar un espacio en blanco
-st.write(" ")
+### Agregar un espacio en blanco
+###st.write(" ")
+# Crea un contenedor de 2 columnas
+col1, col2 = st.columns(2)
 
-st.markdown("""
-<h5 style='text-align: left; color: grey;'>
-Interactúe con los nodos: seleccionándolos para descubrir más detalles y arrastrándolos para visualizar profundidad de la conexión
-</h5>
+# Primer bloque de markdown en la primera columna
+with col1:
+    st.markdown("""
+    <h5 style='text-align: left; color: #444; line-height: 1.5; margin-bottom: 20px;'>  <!-- Aumenta el margen inferior aquí -->
+    Interactúe con los nodos:
+    </h5>
+    <ul style='font-size: 13px; color: #444; margin-top: 0px;'>
+    <li style='margin-bottom: 10px;'>Seleccionándolos para descubrir más detalles</li>
+    <li style='margin-bottom: 10px;'>Arrastrándolos para descubrir el alcance de sus conexiones</li>
+    </ul>
+    """, unsafe_allow_html=True)
+# Segundo bloque de markdown (con estilos) en la segunda columna
+with col2:
+    st.markdown("""
+    <style>
+    .red-text { color: #FF0000; }  /* Rojo */
+    .gold-text { color: #FFD700; } /* Dorado */
+    .lightgreen-text { color: #90EE90; } /* Verde claro */
+    .lightblue-text { color: #33CAFF; } /* Azul claro */
+    .lightpink-text { color: #FFB6C1; } /* Rosa claro */
+    </style>
 
-""", unsafe_allow_html=True)
-
-
-st.markdown("""
-
-
-<ul style='font-size: 13px; color: grey; margin-top: 0px;'>
-    <strong>Proyecto</strong>: 🟥 (Color rojo)
-    <strong>Director</strong>: 🟡 (Color dorado)
-    <strong>Codirector</strong>: 🟢 (Color verde claro)
-    <strong>Investigador</strong>: 🔵 (Color azul claro)
-    <strong>Estudiante</strong>: 🟣 (Color rosa claro)
-""", unsafe_allow_html=True)
-
-
-
-
+    <ul style='font-size: 13px; color: grey; margin-top: 0px;'>
+        <li><span class="red-text"><strong>Proyecto</strong></span></li>
+        <li><span class="gold-text"><strong>Director</strong></span></li>
+        <li><span class="lightgreen-text"><strong>Codirector</strong></span></li>
+        <li><span class="lightblue-text"><strong>Investigador</strong></span></li>
+        <li><span class="lightpink-text"><strong>Estudiante</strong></span></li>
+    </ul>
+    """, unsafe_allow_html=True)
 
 
 # Definición de funciones
-def abreviar_nombre_proyecto(nombre, max_chars=25):
+def abreviar_nombre_proyecto(nombre, max_chars=55):
     if len(nombre) > max_chars:
-        abreviado = nombre[:max_chars-3] + "..."
+        abreviado = nombre[:max_chars-15] + "..."
     else:
         abreviado = nombre
     return abreviado
@@ -198,15 +208,15 @@ def formatear_apellido(apellido):
 
 # Mapeo de roles a colores específicos
 rol_a_color = {
-    'Director': 'gold',
-    'Codirector': 'mediumaquamarine',
-    'Investigador': 'lightsteelblue',
-    'Estudiante': 'lightpink',
+    'Director': '#FFD433',
+    'Codirector': '#90EE90',
+    'Investigador': '#33CAFF',
+    'Estudiante': '#FFB6C1',
 }
 
 
 # Crear un gráfico de red con configuraciones de física para movimiento dinámico
-net = Network(height="750px", width="100%", bgcolor="#f0f0f0", font_color="black")
+net = Network(height="700px", width="100%", bgcolor="#f0f2f6", font_color="black")
 
 # Configurar las opciones de física para el movimiento leve y constante
 options = {
@@ -232,21 +242,33 @@ options = {
 # Iterar sobre df_filtrado para agregar nodos y aristas
 for index, row in df_filtrado.iterrows():
     apellido = formatear_apellido(row['Apellido'])
-    nombre_proyecto = abreviar_nombre_proyecto(row['Nombre_y'], 25)  # Ajusta 25 al número de caracteres deseado
+    nombre_proyecto = abreviar_nombre_proyecto(row['Nombre_y'], 31)  # Ajusta el número de caracteres según sea necesario
+    tipo_proyecto = row['Tipo']  # Asegúrate de que esto corresponde al nombre de la columna del tipo de proyecto en tu DataFrame
     rol = row['Rol']
     
     # Obtener el color basado en el rol
     color_nodo = rol_a_color.get(rol, "gray")
 
+    # Definir el contenido del pop-up para incluir el nombre y el tipo del proyecto
+    popup_content = f"""
+    <b>Nombre del proyecto:</b> {row['Nombre_y']}<br>
+    <b>Tipo:</b> {tipo_proyecto}<br>
+
+    <b>Info:</b> <a href="{row['Sitio']}" target="_blank">Visitar sitio</a>
+    """
+    
     # Agregar nodo de la persona con el apellido formateado
     net.add_node(apellido, title=f"Rol: {rol}", label=apellido, color=color_nodo, size=15)
     
-    # Agregar nodo del proyecto diferenciado con el nombre en negrita y abreviado
-    net.add_node(nombre_proyecto, title=f"{row['Nombre_y']}", label=nombre_proyecto, color="#CD5C5C", size=10)
+    # Agregar nodo del proyecto SIN el nombre al lado del nodo
+    # Solo se pasa 'title' para el contenido del pop-up, sin 'label'
+    net.add_node(nombre_proyecto, title=popup_content, color="#FF0000", size=7)
     
     # Conectar persona con proyecto
     net.add_edge(apellido, nombre_proyecto)
 
+
+    
 # Generar el gráfico y guardarlo como HTML
 tmpfile = tempfile.NamedTemporaryFile(delete=False, suffix='.html')
 net.save_graph(tmpfile.name)

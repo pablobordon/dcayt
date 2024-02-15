@@ -108,15 +108,15 @@ if df_filtrado.empty:
     st.stop() # This will halt the app from further execution.
 
 
-st.markdown("<h3 style='text-align: center; color: grey;'>Datos de Investigadores y Proyectos</h3>", unsafe_allow_html=True)
+st.markdown("<h3 style='text-align: center; color: #444;'>Datos de Investigadores y Proyectos</h3>", unsafe_allow_html=True)
 
 st.markdown("""---""")
 
-st.markdown("""
-<h5 style='text-align: left; color: grey;'>
-Diagramas y listas para analizar el estado el estado actual de proyectos e investigadores<br>
-</h5>
-""", unsafe_allow_html=True)
+###st.markdown("""
+###<h5 style='text-align: left; color: grey;'>
+###Diagramas y listas para analizar el estado el estado actual de proyectos e investigadores<br>
+###</h5>
+###""", unsafe_allow_html=True)
 
 
 # KPIs - Mostrar en dos columnas
@@ -186,7 +186,7 @@ st.markdown("""---""")
 #############3 Gradico de ganth
 
 
-st.markdown("<h4 style='text-align: center; color: grey;'>Seguimiento de proyectos en el tiempo</h4>", unsafe_allow_html=True)
+st.markdown("<h4 style='text-align: center; color: #444;'>Seguimiento en el tiempo</h4>", unsafe_allow_html=True)
 
 
 
@@ -250,7 +250,7 @@ def contar_proyectos_por_categoria(df, categoria):
 
 
 
-st.markdown("<h4 style='text-align: center; color: grey;'>Proyectos por categoría</h4>", unsafe_allow_html=True)
+st.markdown("<h4 style='text-align: center; color: #444;'>Proyectos por categoría</h4>", unsafe_allow_html=True)
 
 # Actualizar la lista de categorías para incluir "Característica" y excluir "Radicación" y "Estado"
 categorias = ['Tipo', 'Línea', 'Sublínea', 'Característica']
@@ -274,7 +274,7 @@ st.plotly_chart(fig_derecha)
 st.markdown("""---""")
 
 
-st.markdown("<h4 style='text-align: center; color: grey;'>Investigadores por categoría</h4>", unsafe_allow_html=True)
+st.markdown("<h4 style='text-align: center; color: #444;'>Investigadores por categoría</h4>", unsafe_allow_html=True)
 
 # Actualizar la lista de categorías y usar un diccionario para mapear los nombres mostrados en el selector
 categorias = ['Area', 'Condición', 'Sexo', 'Título de Grado', 'Título Posgrado']

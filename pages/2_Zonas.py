@@ -6,7 +6,7 @@ import os
 
 
 #configurar página
-st.set_page_config(page_title="Mapas", page_icon="🌐", layout="wide")
+st.set_page_config(page_title="Zonas", page_icon="🌐", layout="wide")
 
 
 # Definición de la función para cargar datos
@@ -112,34 +112,40 @@ import folium
 from streamlit_folium import st_folium
 
 
-st.markdown("<h3 style='text-align: center; color: grey;'>Zona de influencia de proyectos</h3>", unsafe_allow_html=True)
+st.markdown("<h3 style='text-align: center; color: #444;'>Zona de influencia de proyectos</h3>", unsafe_allow_html=True)
 
 st.markdown("""---""")
 
+# Crea un contenedor de 2 columnas
+col1, col2 = st.columns(2)
 
-# Agregar un espacio en blanco
-st.write(" ")
+# Primer bloque de markdown en la primera columna
+with col1:
+    st.markdown("""
+    <h5 style='text-align: left; color: #444;'>
+    Seleccione el correspondiente ícono para obtener más información del proyecto<br>
+    </h5>
+    """, unsafe_allow_html=True)
 
 
-st.markdown("""
-<h5 style='text-align: left; color: grey;'>
-Este mapa permite visualizar información relacionada tanto con proyectos como con investigadores.<br>
-<ul>
-    <li>Seleccione los íconos para obtener más información.</li>
-    <li>Utilice el panel lateral para aplicar filtros específicos.</li>
-</ul>
-</h5>
 
-""", unsafe_allow_html=True)
 
-#################
-st.markdown("""
-<span style='font-size: 13px;'> 
-<strong>Proyecto de Extensión</strong>: 🟥 (Color rojo) / 
-<strong>Proyecto de Vinculación</strong>: 🟢 (Color verde claro) / 
-<strong>Proyecto de Investigación</strong>: 🔵 (Color azul claro) 
-</span>
-""", unsafe_allow_html=True)
+
+with col2:
+    st.markdown("""
+    <style>
+    .red-text { color: red; }  /* Rojo */
+    .gold-text { color: orange; } /* Dorado */
+    .lightgreen-text { color: purple; } /* Verde claro */
+    </style>
+
+    <ul style='font-size: 13px; color: grey; margin-top: 0px;'>
+        <li><span class="red-text"><strong>Proyecto Investigación</strong></span></li>
+        <li><span class="gold-text"><strong>Proyecto Vinculación</strong></span></li>
+        <li><span class="lightgreen-text"><strong>Proyecto Extensión</strong></span></li>
+    </ul>
+    """, unsafe_allow_html=True)
+
 
 
 # Asegurarse de que df_filtrado ya está preparado y contiene las columnas necesarias
@@ -149,13 +155,13 @@ df_mapa = df_filtrado.dropna(subset=['LATITUDE2', 'LONGITUDE2'])
 
 # Definir un mapeo de colores para cada tipo de proyecto
 tipo_a_color = {
-    'Investigación': 'blue',
-    'Vinculación': 'green',
-    'Extensión': 'red',
+    'Investigación': 'red',
+    'Vinculación': 'orange',
+    'Extensión': 'purple',
 }
 
 # Crear un mapa de Folium
-m = folium.Map(location=[-34.6037, -58.3816], zoom_start=10)  # Usar una ubicación y zoom iniciales adecuados
+m = folium.Map(location=[-34.6037, -58.3816], zoom_start=10, tiles='CartoDB Positron')  # Usar una ubicación y zoom iniciales adecuados
 
 #Añadir marcadores para los proyectos
 for _, row in df_mapa.iterrows():
